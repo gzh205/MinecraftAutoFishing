@@ -73,37 +73,39 @@ public class AutoFishing {
 
     @SubscribeEvent
     public void onSplash(net.minecraftforge.client.event.sound.PlaySoundEvent event) throws IllegalAccessException {
-        if (event.getName().equals("entity.fishing_bobber.splash")) {
-            if (mc.player.fishingBobber != null) {
-                if (status.get(mc.player.fishingBobber).toString().equals("BOBBING")) {
-                    if (fishingDelay.getInt(mc.player.fishingBobber) <= 0 && !hooked) {
-                        hooked = true;
-                        LOGGER.info("======================fish get=======================");
-                        new Timer().schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                try {
-                                    rightClick.invoke(mc);
-                                    Thread.sleep(500);
-                                    if (!(mc.player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof FishingRodItem)) {
-                                        for (ItemStack s : mc.player.inventory.mainInventory) {
-                                            if (s.getItem() instanceof FishingRodItem) {
-                                                mc.player.setHeldItem(Hand.MAIN_HAND, s);
+        if(OptionsWnd.checkAutoFishing!=null&&OptionsWnd.checkAutoFishing.enable) {
+            if (event.getName().equals("entity.fishing_bobber.splash")) {
+                if (mc.player.fishingBobber != null) {
+                    if (status.get(mc.player.fishingBobber).toString().equals("BOBBING")) {
+                        if (fishingDelay.getInt(mc.player.fishingBobber) <= 0 && !hooked) {
+                            hooked = true;
+                            LOGGER.info("======================fish get=======================");
+                            new Timer().schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        rightClick.invoke(mc);
+                                        Thread.sleep(1000);
+                                        if (!(mc.player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof FishingRodItem)) {
+                                            for (ItemStack s : mc.player.inventory.mainInventory) {
+                                                if (s.getItem() instanceof FishingRodItem) {
+                                                    mc.player.setHeldItem(Hand.MAIN_HAND, s);
+                                                }
                                             }
                                         }
+                                        rightClick.invoke(mc);
+                                        Thread.sleep(500);
+                                        hooked = false;
+                                    } catch (IllegalAccessException e) {
+                                        LOGGER.info(e.getStackTrace());
+                                    } catch (InterruptedException e) {
+                                        LOGGER.info(e.getStackTrace());
+                                    } catch (InvocationTargetException e) {
+                                        LOGGER.info(e.getStackTrace());
                                     }
-                                    rightClick.invoke(mc);
-                                    Thread.sleep(500);
-                                    hooked = false;
-                                } catch (IllegalAccessException e) {
-                                    LOGGER.info(e.getStackTrace());
-                                } catch (InterruptedException e) {
-                                    LOGGER.info(e.getStackTrace());
-                                } catch (InvocationTargetException e) {
-                                    LOGGER.info(e.getStackTrace());
                                 }
-                            }
-                        }, 500);
+                            }, 500);
+                        }
                     }
                 }
             }
@@ -114,7 +116,6 @@ public class AutoFishing {
     public void Tick(TickEvent event) {
         if (event != null && mc.world != null && mc.player != null) {
             if (keyCode != null && keyCode.isPressed()) {
-                LOGGER.info("======================H key pressed=======================");
                 onHKeyPressed();
             }
         }

@@ -1,7 +1,8 @@
 package com.example.examplemod.gui;
 
 import com.example.examplemod.FishingCore.AutoFishing;
-import net.minecraft.client.Minecraft;
+import com.example.examplemod.FishingCore.CheckBox;
+import com.example.examplemod.FishingCore.CheckNightVision;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.CheckboxButton;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,7 +13,8 @@ import java.lang.reflect.Field;
 
 public class OptionsWnd extends Screen {
 
-    public CheckboxButton checkNightVision;
+    public static CheckNightVision checkNightVision = new CheckNightVision(20, 20, 150, 20, "enable night vision", false);
+    public static CheckBox checkAutoFishing = new CheckBox(20, 50, 150, 20, "enable auto fishing", false);;
     Field checked;
     public static OptionsWnd inst;
 
@@ -28,31 +30,12 @@ public class OptionsWnd extends Screen {
         if (getMinecraft() != null && getMinecraft().world != null) {
             PlayerEntity player = getMinecraft().player;
             if (getMinecraft().player != null) {
-                this.renderBackground();
-                this.checkNightVision = new CheckboxButton(20, 50, 150, 20, "enable night vision", false);
-                this.addButton(this.checkNightVision);
-
-                try {
-                    this.checked = CheckboxButton.class.getDeclaredField("field_212943_a");
-                    this.checked.setAccessible(true);
-                } catch (NoSuchFieldException e) {
-                    AutoFishing.LOGGER.info(e.getMessage());
-                }
+                this.renderBackground(200);
+                this.addButton(checkNightVision);
+                this.addButton(checkAutoFishing);
             }
         }
     }
-
-    public boolean isChecked(CheckboxButton check) {
-        if(check==null) return false;
-        boolean result = false;
-        try {
-            result = checked.getBoolean(check);
-        }catch(IllegalAccessException e){
-            AutoFishing.LOGGER.info(e.getMessage());
-        }
-        return result;
-    }
-
 
     private OptionsWnd(ITextComponent titleIn) {
         super(titleIn);
