@@ -38,31 +38,14 @@ public class Fishing {
         ClientRegistry.registerKeyBinding(keyCode);
         OptionsWnd.getInstance();
         Method[] methods = mc.getClass().getDeclaredMethods();
-        for (Method m : methods) {
-            if (m.getName().equals("func_147121_ag")) {//rightClickMouse
-                this.rightClick = m;
-                this.rightClick.setAccessible(true);
-            }
-        }
-        Field[] fields = FishingBobberEntity.class.getDeclaredFields();
-        for (Field f : fields) {
-            if (f.getName().equals("field_190627_av")) {//currentState
-                this.status = f;
-                this.status.setAccessible(true);
-            }
-            if (f.getName().equals("field_146040_ay")) {//ticksCaughtDelay
-                this.fishingDelay = f;
-                this.fishingDelay.setAccessible(true);
-            }
-        }
-        if (this.rightClick == null) {
-            LOGGER.info("================ do not found method func_147121_ag===================");
-        }
-        if (this.status == null) {
-            LOGGER.info("======================= do not found field field_190627_av========================");
-        }
-        if (this.fishingDelay == null) {
-            LOGGER.info("======================= do not found field field_146040_ay========================");
+        try {
+            this.rightClick=mc.getClass().getDeclaredMethod("func_147121_ag");
+            this.status=mc.getClass().getDeclaredField("field_190627_av");
+            this.fishingDelay=mc.getClass().getDeclaredField("field_146040_ay");
+        } catch (NoSuchMethodException e) {
+            LOGGER.info("================ cannot found methods===================");
+        } catch(NoSuchFieldException e1){
+            LOGGER.info("======================= cannot found fields========================");
         }
         hooked = false;
     }

@@ -1,9 +1,7 @@
 package com.example.examplemod;
 
-import com.example.examplemod.FIshingCore.Fishing;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,14 +19,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod("autofishing")
+@Mod("examplemod")
 public class AutoFishing
 {
     // Directly reference a log4j logger.
-    public static final Logger LOGGER = LogManager.getLogger();
-    public static final Minecraft mc = Minecraft.getInstance();
-    //A Fishing object
-    public Fishing fishing;
+    private static final Logger LOGGER = LogManager .getLogger();
 
     public AutoFishing() {
         // Register the setup method for modloading
@@ -68,7 +63,6 @@ public class AutoFishing
         LOGGER.info("Got IMC {}", event.getIMCStream().
                 map(m->m.getMessageSupplier().get()).
                 collect(Collectors.toList()));
-        this.fishing = new Fishing();
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent

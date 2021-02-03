@@ -12,8 +12,8 @@ public class CheckNightVision extends CheckboxButton {
     }
 
     @Override
-    public void func_230930_b_(){//onPress
-        super.func_230930_b_();
+    public void onPress(){//onPress
+        super.onPress();
         enable = !enable;
         if(enable) Minecraft.getInstance().gameSettings.gamma = 255;
         else Minecraft.getInstance().gameSettings.gamma = 1;

@@ -10,7 +10,6 @@
 2. 夜视功能则是设置Minecraft.GameSettings.gamma的值，通过将该值设置为255获得夜视效果。
 3. 由于部分库函数是私有成员，因此只能通过反射的方式强制调用。
 ## 更新内容
-从1.14.3更新到1.16.1，其中：
-1. CheckBox和CheckNightVision的onPress方法更名为func_230930_b_  
-2. CheckboxButton构造函数的第三个参数从String变为ITextComponent
-3. CheckboxButton新增了isChecked方法(但是并未使用)  
+从1.16.1-1.16.3更新到1.16.4，其中：
+1. 由于MCP版本的变化，部分函数名已经修改  
+2. 未来会增加新的功能  

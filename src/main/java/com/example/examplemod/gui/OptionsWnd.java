@@ -19,26 +19,26 @@ public class OptionsWnd extends Screen {
     }
 
     @Override
-    public void func_231160_c_() {
+    public void init() {
         if (getMinecraft() != null && getMinecraft().world != null) {
             PlayerEntity player = getMinecraft().player;
             if (getMinecraft().player != null) {
-                this.func_230480_a_(checkNightVision);
-                this.func_230480_a_(checkAutoFishing);
+                this.addButton(checkNightVision);
+                this.addButton(checkAutoFishing);
             }
         }
     }
 
     private OptionsWnd(ITextComponent titleIn) {
         super(titleIn);
-        this.func_231160_c_();
+        this.init();
     }
 
     public void showWnd() {
-        this.field_230706_i_.displayGuiScreen(this);
+        this.minecraft.displayGuiScreen(this);
     }
 
     public void onClose() {
-        this.field_230706_i_.displayGuiScreen(null);
+        this.minecraft.displayGuiScreen(null);
     }
 }

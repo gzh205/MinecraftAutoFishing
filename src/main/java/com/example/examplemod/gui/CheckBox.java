@@ -11,8 +11,8 @@ public class CheckBox extends CheckboxButton {
         enable = false;
     }
     @Override
-    public void func_230930_b_(){//onPress
-        super.func_230930_b_();
+    public void onPress(){//onPress
+        super.onPress();
         this.enable = !enable;
     }
 }
